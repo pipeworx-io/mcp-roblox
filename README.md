@@ -2,7 +2,7 @@
 
 Roblox MCP — keyless public-profile lookups via roblox.com's subdomain APIs.
 
-Part of [Pipeworx](https://pipeworx.io) — an MCP gateway connecting AI agents to 1476+ live data sources.
+Part of [Pipeworx](https://pipeworx.io) — an MCP gateway connecting AI agents to 1679+ live data sources.
 
 ## Tools
 
@@ -16,10 +16,11 @@ Part of [Pipeworx](https://pipeworx.io) — an MCP gateway connecting AI agents 
 - `user_presence(user_ids)` — presence/status for up to 100 user ids (POST)
 - `group(group_id)` — group detail
 - `game(universe_id)` — game (universe) detail
+- `game_passes(universe_id? | place_id? | name?, cursor?, limit?)` — list the game passes sold in an experience with their exact Robux price. Pass exactly one of `universe_id`, `place_id`, or `name` (e.g. `"Grow a Garden"`) to resolve the experience. A pass currently not for sale returns `is_for_sale: false` and `price_robux: null` (never `0`). Cursor-paginated, capped at 100 per page. Note: many top experiences monetize through consumable "developer products" rather than permanent game passes, so a short or empty list can be the correct answer, not a broken call.
 
 ## Data source
 
-`https://users.roblox.com`, `https://friends.roblox.com`, `https://badges.roblox.com`, `https://games.roblox.com`, `https://groups.roblox.com`, `https://presence.roblox.com`
+`https://users.roblox.com`, `https://friends.roblox.com`, `https://badges.roblox.com`, `https://games.roblox.com`, `https://groups.roblox.com`, `https://presence.roblox.com`, `https://apis.roblox.com` (game-passes, universes, search-api)
 
 ## Quick Start
 
@@ -65,9 +66,45 @@ directly, instead of just this one's:
 }
 ```
 
-Both URLs reach the same gateway and the same 1476+ data sources. The
+Both URLs reach the same gateway and the same 1679+ data sources. The
 only difference is which pack's tools are listed **directly**; `ask_pipeworx`
 reaches all of them from either one.
+
+## No MCP client? Call it over HTTP
+
+```bash
+curl -X POST https://gateway.pipeworx.io/v1/tools/user_by_username \
+  -H 'Content-Type: application/json' \
+  -d '{"username":"builderman"}'
+```
+
+No account needed for the first calls. Inspect any tool: `GET https://gateway.pipeworx.io/v1/tools/user_by_username`. Find one: `POST https://gateway.pipeworx.io/v1/tools/search_packs` with `{"query":"..."}`.
+
+## Standalone (no gateway account)
+
+This package also runs as a local stdio MCP server — no Pipeworx account, no
+gateway round-trip:
+
+```json
+{
+  "mcpServers": {
+    "roblox": {
+      "command": "npx",
+      "args": ["-y", "@pipeworx/mcp-roblox"]
+    }
+  }
+}
+```
+
+Or run it directly to confirm it starts:
+
+```bash
+npx -y @pipeworx/mcp-roblox
+```
+
+It speaks MCP over stdin/stdout and answers `initialize`/`tools/list`/`tools/call`
+for **only** this pack's tools — none of the shared meta-tools the gateway
+connection above adds. Same source, same tools, no ask_pipeworx routing.
 
 ## Using with ask_pipeworx
 
@@ -88,13 +125,3 @@ The gateway picks the right tool and fills the arguments automatically.
 ## License
 
 MIT
-
-## No MCP client? Call it over HTTP
-
-```bash
-curl -X POST https://gateway.pipeworx.io/v1/tools/user_by_username \
-  -H 'Content-Type: application/json' \
-  -d '{"username":"builderman"}'
-```
-
-No account needed for the first calls. Inspect any tool: `GET https://gateway.pipeworx.io/v1/tools/user_by_username`. Find one: `POST https://gateway.pipeworx.io/v1/tools/search_packs` with `{"query":"..."}`.
