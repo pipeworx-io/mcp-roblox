@@ -1,6 +1,6 @@
 {
   "name": "@pipeworx/mcp-roblox",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Roblox MCP.",
   "type": "module",
   "main": "src/index.ts",
@@ -26,7 +26,7 @@
     "@cloudflare/workers-types": "^4.20260405.1"
   },
   "pipeworx": {
-    "sourceHash": "v1-360dee8b625e357bdff95cf531bd54dffdd2e473cf63214904b68556a5dd9c10",
-    "sourceCommit": "00c836ddeaecbdd581dcfb0fb1842efea104006e"
+    "sourceHash": "v1-78fab43280567e053bde3054971d4ce59fac46ac70777601f582463ff749ef22",
+    "sourceCommit": "6fe8fb3e01138dfc4ebe7d5c246503aab9278d06"
   }
 }
