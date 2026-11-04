@@ -1,6 +1,6 @@
 {
   "name": "@pipeworx/mcp-roblox",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Roblox MCP.",
   "type": "module",
   "main": "lib/index.js",
@@ -27,7 +27,7 @@
     "mode": "gateway",
     "slug": "roblox",
     "gatewaySlug": "roblox",
-    "sourceHash": "v1-abb3716b8c9268fcb7b4abe782646d85fe939d8ad11a2caa72397d7aa108b74d",
-    "sourceCommit": "6bae4cfa7b6a73bbe014dc8820a19c80c842b21e"
+    "sourceHash": "v1-88b38ade74588c501d1a32f2db8c7c031bfcc50c91f2e3bdb699cf62eb37367f",
+    "sourceCommit": "db27387ed3ef7ec4805d465f7964a7f65f937006"
   }
 }
